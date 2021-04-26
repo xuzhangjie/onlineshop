@@ -34,8 +34,14 @@ public class LoginJDBC {
         String role = resultSet.getString("role");
         String userPassword = MD5Utils.code(password);
         if(userPassword.equals(codePassword)){
+            resultSet.close();
+            statement.close();
+            conn.close();
             return role;
         }else {
+            resultSet.close();
+            statement.close();
+            conn.close();
             throw new RuntimeException("账号或密码错误!");
         }
 
