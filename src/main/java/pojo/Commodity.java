@@ -14,13 +14,23 @@ public class Commodity {
     private Integer amt;
     private Double price;
     private Integer num;
+    private Integer userId;
 
-    public Commodity(String code, String name, Integer amt, Double price, Integer num) {
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Commodity(String code, String name, Integer amt, Double price, Integer num, Integer userId) {
         this.code = code;
         this.name = name;
         this.amt = amt;
         this.price = price;
         this.num = num;
+        this.userId = userId;
     }
 
     public Commodity() {
