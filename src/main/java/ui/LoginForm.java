@@ -16,9 +16,6 @@ import javax.swing.*;
  */
 public class LoginForm extends JFrame {
 
-    public static void main(String[] args) {
-        new LoginForm();
-    }
 
     public LoginForm() {
         initComponents();
@@ -28,46 +25,13 @@ public class LoginForm extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         label1 = new JLabel();
         label2 = new JLabel();
-        textField1 = new JTextField("pmc");
-        textField2 = new JTextField("123457");
+        textField1 = new JTextField();
+        textField2 = new JTextField();
         button1 = new JButton();
-
-        // 监听点击登录事件发生
-        button1.addActionListener(
-                new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-
-                        String username = textField1.getText();
-                        String password = textField2.getText();
-
-                        try {
-                            String role = LoginJDBC.login(username, password);
-                            System.out.println("登录成功");
-                            if (role.equals("买家")) {
-                                UserMainForm userMainForm = new UserMainForm();
-                                userMainForm.setVisible(true);// 如果是买家显示商品展示页面
-                                setVisible(false);// 登录成功的情况下隐藏登录界面
-                            } else {
-
-                            }
-                        } catch (ClassNotFoundException ec) {
-                            ec.printStackTrace();
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        } catch (RuntimeException re) {
-                            // 账号或者密码错误
-                            System.out.println(re.getMessage());
-                        }
-                    }
-                }
-        );
-
-
-
+        button2 = new JButton();
 
         //======== this ========
-        setVisible(false);
+        setMinimumSize(new Dimension(500, 500));
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -90,6 +54,11 @@ public class LoginForm extends JFrame {
         contentPane.add(button1);
         button1.setBounds(new Rectangle(new Point(95, 215), button1.getPreferredSize()));
 
+        //---- button2 ----
+        button2.setText("\u6ce8\u518c");
+        contentPane.add(button2);
+        button2.setBounds(new Rectangle(new Point(265, 215), button2.getPreferredSize()));
+
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -106,9 +75,38 @@ public class LoginForm extends JFrame {
         }
         pack();
         setLocationRelativeTo(getOwner());
-        setVisible(true);// 让窗口可见
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// 窗口关闭的时候，进程也结束
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
+        // 监听点击登录事件发生
+        button1.addActionListener(
+                new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+
+                        String username = textField1.getText();
+                        String password = textField2.getText();
+
+                        try {
+                            String role = LoginJDBC.login(username, password);
+                            System.out.println("登录成功");
+                            if (role.equals("买家")) {
+                                // 如果是买家显示商品展示页面
+
+                                setVisible(false);// 登录成功的情况下隐藏登录界面
+                            } else {
+
+                            }
+                        } catch (ClassNotFoundException ec) {
+                            ec.printStackTrace();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        } catch (RuntimeException re) {
+                            // 账号或者密码错误
+                            System.out.println(re.getMessage());
+                        }
+                    }
+                }
+        );
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -117,5 +115,6 @@ public class LoginForm extends JFrame {
     private JTextField textField1;
     private JTextField textField2;
     private JButton button1;
+    private JButton button2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

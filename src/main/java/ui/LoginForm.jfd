@@ -5,6 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "this"
+			"minimumSize": new java.awt.Dimension( 500, 500 )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "账号"
@@ -42,9 +43,16 @@ new FormModel {
 				"x": 95
 				"y": 215
 			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "注册"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 265
+				"y": 215
+			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 235, 125 )
-			"size": new java.awt.Dimension( 605, 465 )
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 710, 495 )
 		} )
 	}
 }
