@@ -17,7 +17,7 @@ public class Test {
     public static void main(String[] args) {
         try {
             List<Commodity> list = new ArrayList<>();
-            Commodity commodity = new Commodity("001","纯生啤酒",81,6.00,10);
+            Commodity commodity = new Commodity("001","牙膏",200,10.00,10,1);
             list.add(commodity);
             String msg = CommodityJDBC.saleCommodity(list);
             System.out.println(msg);
