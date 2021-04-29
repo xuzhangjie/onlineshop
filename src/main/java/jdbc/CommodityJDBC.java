@@ -4,7 +4,9 @@ import pojo.Commodity;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author pangjian
@@ -17,17 +19,22 @@ public class CommodityJDBC {
 
     private static final String URL = "jdbc:oracle:thin:@47.119.128.150:1521:orcl";
 
+    private static final String[] head={"商品名称","剩售数量","单价"};
+
+    private static Object[][] data =null;
 
     /**
      * @Description:返回商铺所有的商品
      * @return java.util.List<pojo.Commodity>
      * @date 2021/4/27 22:44
     */
-    public static List<Commodity> getCommodity() throws ClassNotFoundException, SQLException {
+    public static List getCommodity() throws ClassNotFoundException, SQLException {
+
+        List retrunList = new ArrayList();
 
         List<Commodity> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM S_STOCK ";
+        String sql = "SELECT * FROM S_STOCK WHERE SAMT > 0";
 
         Class.forName("oracle.jdbc.driver.OracleDriver");
 
@@ -39,15 +46,31 @@ public class CommodityJDBC {
 
         while (resultSet.next()){
             Commodity commodity = new Commodity();
-            commodity.setName(resultSet.getString("cname"));
-            commodity.setAmt(resultSet.getInt("camt"));
-            commodity.setPrice(resultSet.getDouble("cprice"));
+            commodity.setName(resultSet.getString("sname"));
+            commodity.setAmt(resultSet.getInt("samt"));
+            commodity.setPrice(resultSet.getDouble("sprice"));
             list.add(commodity);
         }
+
+        data = new Object[list.size()][head.length];
+        //把集合里的数据放到Object这个二维数组里面
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < head.length; j++) {
+                data[i][0] = list.get(i).getName();
+                data[i][1] = list.get(i).getAmt();
+                data[i][2] = list.get(i).getPrice();
+            }
+        }
+
+        retrunList.add(data);
+        retrunList.add(head);
+
+
         resultSet.close();
         statement.close();
         conn.close();
-        return list;
+
+        return retrunList;
 
     }
 
@@ -59,7 +82,7 @@ public class CommodityJDBC {
     public static String saleCommodity(List<Commodity> list) throws SQLException {
 
 
-        String sql ="call proc_order(?,?,?)";
+        String sql ="call proc_order(?,?,?,?)";
 
         Connection connection = DriverManager.getConnection(URL,"scott","tiger");
 
@@ -70,6 +93,7 @@ public class CommodityJDBC {
             callableStatement.setString(1,commodity.getName());
             callableStatement.setDouble(2,commodity.getPrice());
             callableStatement.setInt(3,commodity.getNum());
+            callableStatement.setInt(4,commodity.getUserId());
 
             callableStatement.execute();
         }
