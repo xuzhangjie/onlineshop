@@ -15,6 +15,15 @@ public class Commodity {
     private Double price;
     private Integer num;
     private Integer userId;
+    private Integer shopId;
+
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
+    }
 
     public Integer getUserId() {
         return userId;
