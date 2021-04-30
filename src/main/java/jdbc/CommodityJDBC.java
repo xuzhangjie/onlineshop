@@ -19,22 +19,22 @@ public class CommodityJDBC {
 
     private static final String URL = "jdbc:oracle:thin:@47.119.128.150:1521:orcl";
 
-    private static final String[] head={"商品名称","剩售数量","单价"};
+    private static final String[] HEAD={"商品名称","剩售数量","单价"};
 
     private static Object[][] data =null;
 
     /**
-     * @Description:返回商铺所有的商品
+     * @Description:返回某个商铺所有的商品
      * @return java.util.List<pojo.Commodity>
      * @date 2021/4/27 22:44
     */
-    public static List getCommodity() throws ClassNotFoundException, SQLException {
+    public static List getCommodity(Integer id) throws ClassNotFoundException, SQLException {
 
         List retrunList = new ArrayList();
 
         List<Commodity> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM S_STOCK WHERE SAMT > 0";
+        String sql = "SELECT * FROM S_STOCK WHERE SAMT > 0 AND SHOPID= "+id;
 
         Class.forName("oracle.jdbc.driver.OracleDriver");
 
@@ -52,10 +52,10 @@ public class CommodityJDBC {
             list.add(commodity);
         }
 
-        data = new Object[list.size()][head.length];
+        data = new Object[list.size()][HEAD.length];
         //把集合里的数据放到Object这个二维数组里面
         for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < head.length; j++) {
+            for (int j = 0; j < HEAD.length; j++) {
                 data[i][0] = list.get(i).getName();
                 data[i][1] = list.get(i).getAmt();
                 data[i][2] = list.get(i).getPrice();
@@ -63,7 +63,7 @@ public class CommodityJDBC {
         }
 
         retrunList.add(data);
-        retrunList.add(head);
+        retrunList.add(HEAD);
 
 
         resultSet.close();
