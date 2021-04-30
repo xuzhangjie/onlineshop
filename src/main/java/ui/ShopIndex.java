@@ -5,6 +5,7 @@
 package ui;
 
 import jdbc.CommodityJDBC;
+import pojo.Shop;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,24 +17,26 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author 1
  */
-public class Index extends JFrame {
+public class ShopIndex extends JFrame {
 
-    public static void main(String[] args) {
-        new Index();
-    }
+    private String name;
+    private Integer shopId;
 
-
-    public Index() {
+    public ShopIndex(String name, Integer shopId) {
+        this.name =name;
+        this.shopId =shopId;
         initComponents();
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
+        menuItem2 = new JMenuItem();
         menuItem1 = new JMenuItem();
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
         button1 = new JButton();
+        label1 = new JLabel();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -41,6 +44,10 @@ public class Index extends JFrame {
 
         //======== menuBar1 ========
         {
+
+            //---- menuItem2 ----
+            menuItem2.setText("\u8fd4\u56de");
+            menuBar1.add(menuItem2);
 
             //---- menuItem1 ----
             menuItem1.setText("\u8d2d\u4e70\u7269\u54c1\u8bf7\u767b\u5f55");
@@ -53,12 +60,14 @@ public class Index extends JFrame {
             scrollPane1.setViewportView(table1);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(0, 0, 655, 460);
+        scrollPane1.setBounds(0, 35, 655, 425);
 
         //---- button1 ----
-        button1.setText("\u6d4f\u89c8\u5546\u5e97");
+        button1.setText("\u5237\u65b0\u5546\u54c1");
         contentPane.add(button1);
         button1.setBounds(0, 460, 655, 25);
+        contentPane.add(label1);
+        label1.setBounds(215, 5, 230, 25);
 
         {
             // compute preferred size
@@ -78,13 +87,13 @@ public class Index extends JFrame {
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
-        setVisible(true);//让首页可见
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//窗口关闭时候，进程也结束
 
         //Index首页表格显示商品
         try {
-            String[] head = (String[]) CommodityJDBC.getCommodity().get(1);
-            Object[][] objects =(Object[][]) CommodityJDBC.getCommodity().get(0);
+            java.util.List list = CommodityJDBC.getCommodity(shopId);
+            Object[][] objects =(Object[][]) list.get(0);
+            String[] head =(String[]) list.get(1);
             DefaultTableModel tableModel = new DefaultTableModel(objects,head){
                 public boolean isCellEditabel(int row,int colum){
                     return false;
@@ -103,8 +112,9 @@ public class Index extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         try {
-                            String[] head = (String[]) CommodityJDBC.getCommodity().get(1);
-                            Object[][] objects =(Object[][]) CommodityJDBC.getCommodity().get(0);
+                            java.util.List list = CommodityJDBC.getCommodity(shopId);
+                            Object[][] objects =(Object[][]) list.get(0);
+                            String[] head =(String[]) list.get(1);
                             DefaultTableModel tableModel = new DefaultTableModel(objects,head){
                                 public boolean isCellEditabel(int row,int colum){
                                     return false;
@@ -123,14 +133,29 @@ public class Index extends JFrame {
 
         );
 
-
+        // 点击菜单项跳转登录界面
         menuItem1.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        LoginForm loginForm = new LoginForm();
+                        LoginForm loginForm = new LoginForm(shopId);
                         setVisible(false);
                         loginForm.setVisible(true);
+                    }
+                }
+        );
+
+        // 显示商店名
+        label1.setText("欢迎光临"+name);
+
+        //返回按钮
+        menuItem2.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setVisible(false);
+                        ShopForm shopForm = new ShopForm();
+                        shopForm.setVisible(true);
                     }
                 }
         );
@@ -140,9 +165,11 @@ public class Index extends JFrame {
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JMenuBar menuBar1;
+    private JMenuItem menuItem2;
     private JMenuItem menuItem1;
     private JScrollPane scrollPane1;
     private JTable table1;
     private JButton button1;
+    private JLabel label1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
