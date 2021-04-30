@@ -49,12 +49,12 @@ new FormModel {
 					"text": "订单查询"
 				} )
 				add( new FormComponent( "javax.swing.JMenuItem" ) {
-					name: "menuItem6"
-					"text": "退出登录"
-				} )
-				add( new FormComponent( "javax.swing.JMenuItem" ) {
 					name: "menuItem7"
 					"text": "商品进货"
+				} )
+				add( new FormComponent( "javax.swing.JMenuItem" ) {
+					name: "menuItem6"
+					"text": "退出登录"
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {

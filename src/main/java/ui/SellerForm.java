@@ -10,8 +10,8 @@ import javax.swing.*;
 /**
  * @author 1
  */
-public class sellerForm extends JFrame {
-    public sellerForm() {
+public class SellerForm extends JFrame {
+    public SellerForm() {
         initComponents();
     }
 
@@ -25,8 +25,8 @@ public class sellerForm extends JFrame {
         menuItem4 = new JMenuItem();
         menuItem3 = new JMenuItem();
         menuItem5 = new JMenuItem();
-        menuItem6 = new JMenuItem();
         menuItem7 = new JMenuItem();
+        menuItem6 = new JMenuItem();
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
 
@@ -71,13 +71,13 @@ public class sellerForm extends JFrame {
             menuItem5.setText("\u8ba2\u5355\u67e5\u8be2");
             menuBar1.add(menuItem5);
 
-            //---- menuItem6 ----
-            menuItem6.setText("\u9000\u51fa\u767b\u5f55");
-            menuBar1.add(menuItem6);
-
             //---- menuItem7 ----
             menuItem7.setText("\u5546\u54c1\u8fdb\u8d27");
             menuBar1.add(menuItem7);
+
+            //---- menuItem6 ----
+            menuItem6.setText("\u9000\u51fa\u767b\u5f55");
+            menuBar1.add(menuItem6);
         }
         setJMenuBar(menuBar1);
 
@@ -116,8 +116,8 @@ public class sellerForm extends JFrame {
     private JMenuItem menuItem4;
     private JMenuItem menuItem3;
     private JMenuItem menuItem5;
-    private JMenuItem menuItem6;
     private JMenuItem menuItem7;
+    private JMenuItem menuItem6;
     private JScrollPane scrollPane1;
     private JTable table1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
