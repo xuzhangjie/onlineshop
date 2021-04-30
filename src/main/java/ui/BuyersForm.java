@@ -6,6 +6,7 @@ package ui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /**
@@ -13,14 +14,19 @@ import javax.swing.*;
  */
 public class BuyersForm extends JFrame {
 
-    public BuyersForm() {
+
+    private static Integer userId;
+    private static Integer shopId;
+
+    public BuyersForm(Integer userId,Integer shopId) {
         initComponents();
+        this.userId=userId;
+        this.shopId=shopId;
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
-        menu4 = new JMenu();
         menuItem1 = new JMenuItem();
         menuItem2 = new JMenuItem();
         menuItem6 = new JMenuItem();
@@ -30,6 +36,7 @@ public class BuyersForm extends JFrame {
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
         menuItem7 = new JMenuItem();
+        button1 = new JButton();
 
         //======== this ========
         Container contentPane = getContentPane();
@@ -38,20 +45,6 @@ public class BuyersForm extends JFrame {
         //======== menuBar1 ========
         {
 
-            //======== menu4 ========
-            {
-                menu4.setText("\u4e2a\u4eba\u4fe1\u606f\u7ba1\u7406");
-                menu4.setPreferredSize(new Dimension(93, 21));
-
-                //---- menuItem1 ----
-                menuItem1.setText("\u5bc6\u7801\u4fee\u6539");
-                menu4.add(menuItem1);
-
-                //---- menuItem2 ----
-                menuItem2.setText("\u67e5\u770b\u4e2a\u4eba\u4fe1\u606f");
-                menu4.add(menuItem2);
-            }
-            menuBar1.add(menu4);
 
             //---- menuItem6 ----
             menuItem6.setText("\u6d88\u8d39\u8be6\u60c5");
@@ -76,12 +69,17 @@ public class BuyersForm extends JFrame {
             scrollPane1.setViewportView(table1);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(0, 0, 660, 450);
+        scrollPane1.setBounds(0, 0, 660, 410);
 
         //---- menuItem7 ----
         menuItem7.setText("text");
         contentPane.add(menuItem7);
         menuItem7.setBounds(new Rectangle(new Point(540, -20), menuItem7.getPreferredSize()));
+
+        //---- button1 ----
+        button1.setText("\u52a0\u5165\u8d2d\u7269\u8f66");
+        contentPane.add(button1);
+        button1.setBounds(0, 410, 620, 30);
 
         {
             // compute preferred size
@@ -100,21 +98,37 @@ public class BuyersForm extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
-        menu4.addActionListener(
-                new AbstractAction() {
+
+
+        // 选择商品加入购物车
+        button1.addActionListener(
+                new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        LoginForm loginForm = new LoginForm();
-                        loginForm.setVisible(true);
+                        int count = table1.getSelectedRow();
+                        String name =table1.getValueAt(count,0).toString();
+
+                    }
+                }
+        );
+
+        //查看购物车
+        menuItem9.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CartForm cartForm = new CartForm(userId,shopId);
+                        cartForm.setVisible(true);
                         setVisible(false);
                     }
                 }
         );
+
+
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JMenuBar menuBar1;
-    private JMenu menu4;
     private JMenuItem menuItem1;
     private JMenuItem menuItem2;
     private JMenuItem menuItem6;
@@ -124,5 +138,6 @@ public class BuyersForm extends JFrame {
     private JScrollPane scrollPane1;
     private JTable table1;
     private JMenuItem menuItem7;
+    private JButton button1;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
