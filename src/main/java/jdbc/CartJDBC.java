@@ -74,4 +74,92 @@ public class CartJDBC {
     }
 
 
+    /**
+     * @Description: 用户从购物车中删除商品
+     * @Param shopId: 商店di
+     * @Param name: 商品名
+     * @Param userId: 当前登录用户id
+     * @return java.lang.String
+     * @date 2021/5/3 11:47
+    */
+    public static String delete(Integer shopId,String name,Integer userId) throws ClassNotFoundException, SQLException {
+
+
+        String sql = "DELETE FROM S_CART WHERE SHOPID=? AND NAME=? AND USERID=?";
+
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection connection = DriverManager.getConnection(URL,"scott","tiger");
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setInt(1,shopId);
+        preparedStatement.setString(2,name);
+        preparedStatement.setInt(3,userId);
+
+        preparedStatement.execute();
+
+        preparedStatement.close();
+        connection.close();
+
+        return "删除成功";
+    }
+
+    /**
+     * @Description: 从商店添加商品回购物车
+     * @Param name: 商品名
+     * @Param shopId: 商店id
+     * @Param userId: 用户id
+     * @return java.lang.String
+     * @date 2021/5/3 12:06
+    */
+    public static String addCart(String name,Integer shopId,Integer userId) throws ClassNotFoundException, SQLException {
+
+        String sql = "INSERT INTO S_CART(USERID,SHOPID,NAME,NUM) VALUES (?,?,?,?)";
+
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection connection = DriverManager.getConnection(URL,"scott","tiger");
+        PreparedStatement preparedStatement = connection.prepareCall(sql);
+
+        preparedStatement.setInt(1,userId);
+        preparedStatement.setInt(2,shopId);
+        preparedStatement.setString(3,name);
+        preparedStatement.setInt(4,1);
+
+        preparedStatement.execute();
+
+        preparedStatement.close();
+        connection.close();
+
+        return "添加成功";
+
+    }
+
+    /**
+     * @Description: 返回用户购物车中所有商品的总额
+     * @Param userid: 用户
+     * @return java.lang.Double
+     * @date 2021/5/3 12:20
+    */
+    public static Double getTotalPrice(Integer userid) throws ClassNotFoundException, SQLException {
+
+        String sql = "SELECT SUM(SPRICE) FROM S_CART C LEFT JOIN S_STOCK S ON C.SHOPID=S.SHOPID AND C.NAME=S.SNAME WHERE C.USERID=?";
+
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Connection connection = DriverManager.getConnection(URL,"scott","tiger");
+        PreparedStatement preparedStatement = connection.prepareCall(sql);
+
+        preparedStatement.setInt(1,userid);
+
+        ResultSet rs = preparedStatement.executeQuery();
+
+        rs.next();
+
+        Double totalPrice =rs.getDouble(1);
+
+        return totalPrice;
+
+
+
+    }
+
+
 }
