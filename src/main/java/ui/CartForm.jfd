@@ -34,7 +34,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button2"
-				"text": "text"
+				"text": "从购物车删除该商品"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 10
 				"y": 525
@@ -42,19 +42,28 @@ new FormModel {
 				"height": 45
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button3"
-				"text": "text"
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 235
-				"y": 525
-				"width": 205
-				"height": 45
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button4"
-				"text": "text"
+				"text": "付款码支付"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 460
+				"y": 525
+				"width": 240
+				"height": 40
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 5, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 220
+				"y": 530
+				"width": 80
+				"height": 35
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button3"
+				"text": "扫码支付"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 715
 				"y": 525
 				"width": 240
 				"height": 40
