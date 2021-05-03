@@ -4,10 +4,15 @@
 
 package ui;
 
+import jdbc.CartJDBC;
+import jdbc.CommodityJDBC;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author 1
@@ -19,14 +24,15 @@ public class BuyersForm extends JFrame {
     private static Integer shopId;
 
     public BuyersForm(Integer userId,Integer shopId) {
-        initComponents();
         this.userId=userId;
         this.shopId=shopId;
+        initComponents();
     }
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
+        menu4 = new JMenu();
         menuItem1 = new JMenuItem();
         menuItem2 = new JMenuItem();
         menuItem6 = new JMenuItem();
@@ -45,6 +51,20 @@ public class BuyersForm extends JFrame {
         //======== menuBar1 ========
         {
 
+            //======== menu4 ========
+            {
+                menu4.setText("\u4e2a\u4eba\u4fe1\u606f\u7ba1\u7406");
+                menu4.setPreferredSize(new Dimension(93, 21));
+
+                //---- menuItem1 ----
+                menuItem1.setText("\u5bc6\u7801\u4fee\u6539");
+                menu4.add(menuItem1);
+
+                //---- menuItem2 ----
+                menuItem2.setText("\u67e5\u770b\u4e2a\u4eba\u4fe1\u606f");
+                menu4.add(menuItem2);
+            }
+            menuBar1.add(menu4);
 
             //---- menuItem6 ----
             menuItem6.setText("\u6d88\u8d39\u8be6\u60c5");
@@ -107,6 +127,14 @@ public class BuyersForm extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         int count = table1.getSelectedRow();
                         String name =table1.getValueAt(count,0).toString();
+                        try {
+                            String msg = CartJDBC.addCart(name,shopId,userId);
+                            System.out.println(msg);
+                        } catch (ClassNotFoundException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
 
                     }
                 }
@@ -124,11 +152,32 @@ public class BuyersForm extends JFrame {
                 }
         );
 
+        // 登录后查看当前商店的商品
+        try {
+            java.util.List list = CommodityJDBC.getCommodity(shopId);
+            Object[][] objects =(Object[][]) list.get(0);
+            String[] head =(String[]) list.get(1);
+            DefaultTableModel tableModel = new DefaultTableModel(objects,head){
+                public boolean isCellEditabel(int row,int colum){
+                    return false;
+                }
+            };
+            table1.setModel(tableModel);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+
+
 
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     private JMenuBar menuBar1;
+    private JMenu menu4;
     private JMenuItem menuItem1;
     private JMenuItem menuItem2;
     private JMenuItem menuItem6;
