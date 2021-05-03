@@ -4,14 +4,24 @@
 
 package ui;
 
+import jdbc.CommodityJDBC;
+
 import java.awt.*;
+import java.sql.SQLException;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author 1
  */
 public class SellerForm extends JFrame {
-    public SellerForm() {
+
+    private Integer shopId;
+    private Integer userId;
+
+    public SellerForm(Integer shopId,Integer userId) {
+        this.shopId = shopId;
+        this.userId = userId;
         initComponents();
     }
 
@@ -105,6 +115,22 @@ public class SellerForm extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
+        try {
+            java.util.List list = CommodityJDBC.getCommodity(shopId);
+            Object[][] objects =(Object[][]) list.get(0);
+            String[] head =(String[]) list.get(1);
+            DefaultTableModel tableModel = new DefaultTableModel(objects,head){
+                public boolean isCellEditabel(int row,int colum){
+                    return false;
+                }
+            };
+            table1.setModel(tableModel);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
