@@ -89,7 +89,7 @@ public class ShopIndex extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//窗口关闭时候，进程也结束
 
-        //Index首页表格显示商品
+        //商店首页表格显示商品
         try {
             java.util.List list = CommodityJDBC.getCommodity(shopId);
             Object[][] objects =(Object[][]) list.get(0);
@@ -106,7 +106,7 @@ public class ShopIndex extends JFrame {
             throwables.printStackTrace();
         }
 
-        // 点击浏览商店按钮时进行刷新
+        // 点击刷新商品按钮时进行刷新
         button1.addActionListener(
                 new ActionListener() {
                     @Override
@@ -146,7 +146,7 @@ public class ShopIndex extends JFrame {
         );
 
         // 显示商店名
-        label1.setText("欢迎光临"+name);
+        label1.setText("欢迎光临 "+name);
 
         //返回按钮
         menuItem2.addActionListener(
