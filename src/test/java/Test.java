@@ -1,6 +1,9 @@
 import jdbc.CommodityJDBC;
 import pojo.Commodity;
+import ui.ChangePasswordForm;
+import utils.CreateImageCode;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,7 @@ import java.util.List;
 public class Test {
 
     public static void main(String[] args) {
-        try {
+       /* try {
             List<Commodity> list = new ArrayList<>();
             Commodity commodity = new Commodity("001","牙膏",200,10.00,10,1);
             list.add(commodity);
@@ -23,7 +26,15 @@ public class Test {
             System.out.println(msg);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }*/
+
+        try {
+            ChangePasswordForm changePasswordForm=new ChangePasswordForm("pmc");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+
     }
 
 }

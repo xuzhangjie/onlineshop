@@ -138,9 +138,9 @@ public class ShopIndex extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        LoginForm loginForm = new LoginForm(shopId);
+                      //  LoginForm loginForm = new LoginForm(shopId);
                         setVisible(false);
-                        loginForm.setVisible(true);
+                      //  loginForm.setVisible(true);
                     }
                 }
         );
